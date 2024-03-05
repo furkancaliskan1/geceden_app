@@ -24,7 +24,6 @@ class _LoginPageState extends State <LoginPage> {
     if (_formKey.currentState?.validate() ?? false) {
       // validate işlemi başarılıysa yani form düzgün bir şekilde doldurulduysa
       _formKey.currentState?.save();
-
       // database bağlantı ve veri eşleşmesi var mı yok mu kontrolü. _eMailController = E mail bilgisini , _passwdController = Şifre bilgisini tutuyor.
       // eğer database bağlantısında bir problem yoksa ve eşleşme varsa login yapabilsin.
       // diğer durumlarda Hata mesajı döndürülsün
@@ -66,7 +65,17 @@ class _LoginPageState extends State <LoginPage> {
                   ),
                 ),
                 //butonlar
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30),
+                      child: StringButtonStyle(text: 'Şifremi Unuttum', onTap: (){}),
+                      )
+                  ],
+                ),
+                const SizedBox(height: 30),
                 GecedenButtonStyle(
                   onTap: signUserIn,
                   paddingAll: 10,
@@ -75,57 +84,19 @@ class _LoginPageState extends State <LoginPage> {
                   borderColor: GecedenColors.buttonBlueBorderColor,
                 ),
                 const SizedBox(height: 10),
-              
                 Text(
                  'Hala aramıza katılmadın mı ?',
                   style: TextStyle(color: GecedenColors.iconColor),
                 ),
                 const SizedBox(height: 5),     
-                Text(
-                  'Kayıt Ol',
-                  style : GecedenTextStyles.registerText,
-                  ),
+                StringButtonStyle(text: 'Kayıt Ol', onTap: () { /* register page yönlendirilir. */}),
                 const SizedBox(height: 30),
-                // Çizgi eklenebilr.
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children : [
-                    Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: GecedenColors.iconColor,
-                        width: 1.0
-                      ),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                      child : Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child : IconButton(
-                          onPressed: () {
-                            
-                          },
-                          icon:const Icon(Icons.apple, color: Colors.white, size: 70),
-                        )
-                      ),
-                    ),
+                    ImageButtonStyle(path: 'lib/images/apple.png', onTap: (){}),
                     const SizedBox(width: 70),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: GecedenColors.iconColor,
-                          width: 1.0
-                       ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Image.asset(
-                        "lib/images/google.png",
-                        width: 50,
-                        height: 50,
-                        ),
-                      )
-                    )
+                    ImageButtonStyle(path: 'lib/images/google.png', onTap: (){})
                   ]
                 ),
               ],

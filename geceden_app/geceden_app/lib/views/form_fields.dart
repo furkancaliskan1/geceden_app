@@ -96,19 +96,58 @@ class PasswdField extends StatefulWidget {
 
 class _PasswdFieldState extends State <PasswdField> {
 
+  bool obscureValue = true;
+
+  String? validatePassword(String? value)
+  {
+    String errorMessage = '';
+
+    if (value == null || value.isEmpty) {
+      return '* Şifre alanı boş bırakılamaz.'; 
+    }
+    if (!widget.isSignUp) {
+      if (value.length < 6) {
+        errorMessage += '* Şifrenin uzunluğu 6 karakter veya daha uzun olmalı.\n';
+      }
+      if (!value.contains(RegExp(r'[A-Z]'))) {
+        errorMessage += '* Şifreniz en az bir büyük karakter içermeli.\n';
+      }
+      if (!value.contains(RegExp(r'[a-z]'))) {
+        errorMessage += '* Şifreniz en az bir küçük karakter içermeli.\n';
+      }
+      if (!value.contains(RegExp(r'[0-9]'))) {
+        errorMessage += '* Şifreniz en az bir rakam içermeli.\n';
+      }
+      if (!value.contains(RegExp(r'[!@#%^&*(),.?":{}|<>]'))) {
+        errorMessage += '* Şifreniz en az bir özel karakter içermeli.\n';
+      }
+      return errorMessage;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 310,
       child: TextFormField(
+        obscureText: obscureValue,
+        validator: validatePassword,
         controller: widget.passwdController,
         autocorrect: false,
-        obscureText: true,
         maxLines: 1,
         minLines: 1,
         decoration: InputDecoration(
           labelText: 'Şifre',
           prefixIcon: Icon(Icons.lock ,color: GecedenColors.iconColor),
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                obscureValue = !obscureValue;
+              });
+            }, 
+            icon: Icon(Icons.visibility, color: GecedenColors.iconColor),
+            ),
           filled: true,
           fillColor: GecedenColors.textFieldBackgroundColor,
           contentPadding: const EdgeInsets.only(left: 10, right: 10, top: 15,bottom: 15),
