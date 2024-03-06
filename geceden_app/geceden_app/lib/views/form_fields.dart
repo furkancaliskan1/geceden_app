@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geceden_app/views/geceden_styles.dart';
 import 'package:flutter/services.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class EMailField extends StatefulWidget {
 
@@ -91,7 +93,7 @@ class _PasswdFieldState extends State <PasswdField> {
     String errorMessage = '';
 
     if (value == null || value.isEmpty) {
-      return '* Şifre alanı boş bırakılamaz.'; 
+      return '* Şifre alanı boş bırakılamaz.';
     }
     if (!widget.isSignUp) {
       if (value.length < 6) {
@@ -109,7 +111,7 @@ class _PasswdFieldState extends State <PasswdField> {
       if (!value.contains(RegExp(r'[!@#%^&*(),.?":{}|<>]'))) {
         errorMessage += '* Şifreniz en az bir özel karakter içermeli.\n';
       }
-      return errorMessage;
+      return errorMessage.isEmpty ? null : errorMessage;
     }
     return null;
   }
@@ -121,30 +123,31 @@ class _PasswdFieldState extends State <PasswdField> {
       child: TextFormField(
         obscureText: obscureValue,
         validator: validatePassword,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: widget.passwdController,
         autocorrect: false,
         maxLines: 1,
         minLines: 1,
         decoration: InputDecoration(
           labelText: 'Şifre',
-          prefixIcon: Icon(Icons.lock ,color: GecedenColors.iconColor),
+          prefixIcon: Icon(Icons.lock, color: GecedenColors.iconColor),
           suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
+          onPressed: () {
+            setState(() {
                 obscureValue = !obscureValue;
               });
-            }, 
-            icon: Icon(Icons.visibility, color: GecedenColors.iconColor),
-            ),
-          filled: true,
-          fillColor: GecedenColors.textFieldBackgroundColor,
-          contentPadding: const EdgeInsets.only(left: 10, right: 10, top: 15,bottom: 15),
-          errorBorder: GecedenOutlineInputBorder.errorBorder,
-          focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,
-          enabledBorder: GecedenOutlineInputBorder.enabledBorder,
-          focusedBorder: GecedenOutlineInputBorder.focusedBorder,
-          ),
+        },
+        icon: Icon(Icons.visibility, color: GecedenColors.iconColor),
         ),
+        filled: true,
+        fillColor: GecedenColors.textFieldBackgroundColor,
+        contentPadding: const EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
+        errorBorder: GecedenOutlineInputBorder.errorBorder,
+        focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,
+        enabledBorder: GecedenOutlineInputBorder.enabledBorder,
+        focusedBorder: GecedenOutlineInputBorder.focusedBorder,
+        ),
+      ),
     );
   }
 }
@@ -168,7 +171,7 @@ class  _ShortFieldState extends State <ShortField> {
   
   String? validatePersonal(String? value){
 
-    final regex = RegExp(r'[^a-zA-ZçÇğĞıİöÖşŞüÜ]');
+    final regex = RegExp(r'[^a-z A-ZçÇğĞıİöÖşŞüÜ]');
     
     if (value == null || value.isEmpty) {
       return '* Bu alan boş bırakılamaz';
@@ -311,7 +314,7 @@ class _DropDownMenuState extends State <DropDownMenu> {
       width: 150,
       child: DropdownButtonFormField(
         validator: validateGender,
-        dropdownColor: Color(0xff281c2c),
+        dropdownColor: const Color(0xff281c2c),
         value: dropdownValue,
         onChanged: (newValue) {
           setState(() {
@@ -333,6 +336,66 @@ class _DropDownMenuState extends State <DropDownMenu> {
           focusedBorder: GecedenOutlineInputBorder.focusedBorder,
           errorBorder: GecedenOutlineInputBorder.errorBorder,
           focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,
+        ),
+      ),
+    );
+  }
+}
+
+class PhoneField extends StatefulWidget {
+
+  final TextEditingController controller;
+
+  const PhoneField({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  State <PhoneField> createState() => _PhoneFieldState();
+}
+
+class _PhoneFieldState extends State <PhoneField> {
+
+  String country = 'TR';
+
+  String? validatePhone(PhoneNumber? value){
+
+    final regex = RegExp(r'^[+][(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]$');
+
+    if (value == null || value.number.isEmpty) {
+      return '* Bu alan boş bırakılamaz';
+    }
+    if (!regex.hasMatch(value.number)) {
+      return '* Lütfen geçerli bir numara giriniz';
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 310,
+      child: IntlPhoneField(
+        invalidNumberMessage: '* Lütfen geçerli bir numara giriniz',
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        initialCountryCode: 'TR',
+        onCountryChanged: (value){
+          country = value.toString();
+        },
+        validator: validatePhone,
+        controller: widget.controller,
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+          counterText: '',
+          labelText: 'Telefon Numarası',
+          filled: true,
+          fillColor: GecedenColors.textFieldBackgroundColor,
+          contentPadding: const EdgeInsets.only(left: 10, right: 10 ,top: 15,bottom: 15),
+          enabledBorder: GecedenOutlineInputBorder.enabledBorder,
+          focusedBorder: GecedenOutlineInputBorder.focusedBorder,
+          errorBorder: GecedenOutlineInputBorder.errorBorder,
+          focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,           
         ),
       ),
     );

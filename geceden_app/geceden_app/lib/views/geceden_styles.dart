@@ -67,5 +67,5 @@ class GecedenOutlineInputBorder {
     borderSide: const BorderSide(color : Colors.white),
     borderRadius: BorderRadius.circular(15),
   );
-
 }
+
