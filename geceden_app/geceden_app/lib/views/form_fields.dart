@@ -31,10 +31,10 @@ class _EMailFieldState extends State <EMailField> {
 
     final regex = RegExp(pattern);
     if (value == null || value.isEmpty) {
-      return '*E-Posta alanı boş bırakılamaz';
+      return '* E-Posta alanı boş bırakılamaz';
     }
     if (!regex.hasMatch(value)) {
-      return '*Lütfen geçerli bir e-posta adresi girin';
+      return '* Lütfen geçerli bir e-posta adresi girin';
       }
     return null;
   }
@@ -56,22 +56,10 @@ class _EMailFieldState extends State <EMailField> {
           filled: true,
           fillColor: GecedenColors.textFieldBackgroundColor,
           contentPadding: const EdgeInsets.only(left: 10, right: 10, top: 15,bottom: 15),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide:const BorderSide(color: Colors.red),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(color: Colors.red),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: GecedenColors.formFieldBackGroundColor),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color : Colors.white),
-            borderRadius: BorderRadius.circular(15),
-          ),
+          errorBorder: GecedenOutlineInputBorder.errorBorder,
+          focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,
+          enabledBorder: GecedenOutlineInputBorder.enabledBorder,
+          focusedBorder: GecedenOutlineInputBorder.focusedBorder,
         ),
       ),
     );
@@ -109,10 +97,10 @@ class _PasswdFieldState extends State <PasswdField> {
       if (value.length < 6) {
         errorMessage += '* Şifrenin uzunluğu 6 karakter veya daha uzun olmalı.\n';
       }
-      if (!value.contains(RegExp(r'[A-Z]'))) {
+      if (!value.contains(RegExp(r'[A-ZÇĞİÖŞÜ]'))) {
         errorMessage += '* Şifreniz en az bir büyük karakter içermeli.\n';
       }
-      if (!value.contains(RegExp(r'[a-z]'))) {
+      if (!value.contains(RegExp(r'[a-zçğıöşü]'))) {
         errorMessage += '* Şifreniz en az bir küçük karakter içermeli.\n';
       }
       if (!value.contains(RegExp(r'[0-9]'))) {
@@ -151,22 +139,200 @@ class _PasswdFieldState extends State <PasswdField> {
           filled: true,
           fillColor: GecedenColors.textFieldBackgroundColor,
           contentPadding: const EdgeInsets.only(left: 10, right: 10, top: 15,bottom: 15),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide:const BorderSide(color: Colors.red),
+          errorBorder: GecedenOutlineInputBorder.errorBorder,
+          focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,
+          enabledBorder: GecedenOutlineInputBorder.enabledBorder,
+          focusedBorder: GecedenOutlineInputBorder.focusedBorder,
           ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(color: Colors.red),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: GecedenColors.formFieldBackGroundColor),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color : Colors.white),
-            borderRadius: BorderRadius.circular(15),
-          ),
+        ),
+    );
+  }
+}
+
+class ShortField extends StatefulWidget {
+
+  final String labelText;
+  final TextEditingController controller;
+  
+  const ShortField({
+    super.key,
+    required this.labelText,
+    required this.controller
+    });
+
+  @override
+  State <ShortField> createState() => _ShortFieldState();
+}
+
+class  _ShortFieldState extends State <ShortField> {
+  
+  String? validatePersonal(String? value){
+
+    final regex = RegExp(r'[^a-zA-ZçÇğĞıİöÖşŞüÜ]');
+    
+    if (value == null || value.isEmpty) {
+      return '* Bu alan boş bırakılamaz';
+    }
+    if (regex.hasMatch(value)) {
+      return '* Sadece harf giriniz';
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      child: TextFormField(
+        validator: validatePersonal,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        controller: widget.controller,
+        maxLines: 1,
+        minLines: 1,
+        decoration: InputDecoration(
+          labelText: widget.labelText,
+          filled: true,
+          fillColor: GecedenColors.textFieldBackgroundColor,
+          contentPadding: const EdgeInsets.only(left: 10, right: 10, top: 15,bottom: 15),
+          errorBorder: GecedenOutlineInputBorder.errorBorder,
+          focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,
+          enabledBorder: GecedenOutlineInputBorder.enabledBorder,
+          focusedBorder: GecedenOutlineInputBorder.focusedBorder,
+        ),
+      ),
+    );
+  }
+}
+
+class DateField extends StatefulWidget {
+
+  final TextEditingController controller;
+
+  const DateField({
+    super.key,
+    required this.controller,
+    });
+
+  @override
+  State <DateField> createState() => _DateFieldState();
+}
+
+class _DateFieldState extends State <DateField> {
+
+  bool isGreaterThan18 = true;
+
+  Future<void> _selectDate() async {
+    DateTime? _picked = await showDatePicker( // 20-10-15
+      context: context,
+      initialDate: DateTime.now(), 
+      firstDate: DateTime(1960), 
+      lastDate: DateTime.now()
+      );
+      
+      if (_picked != null) {
+        DateTime currentDate = DateTime.now();
+        setState(() {
+          widget.controller.text = _picked.toString().split(" ")[0];
+        });
+
+        if (currentDate.difference(_picked).inDays ~/ 365 >= 18) {
+          isGreaterThan18 = true;
+        }else{
+          isGreaterThan18 = false;
+      }
+    }
+  }
+
+  String? validateDate(String? value)
+  {
+    if (value == null || value.isEmpty) {
+      return '* Bu alan boş bırakılamaz';
+    }
+    if (!isGreaterThan18) {
+      return '* Yaşınız 18 den büyük olmalı.';
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      child: TextFormField(
+        validator: validateDate,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        controller: widget.controller,
+        readOnly: true,
+        decoration: InputDecoration(
+          labelText: 'Doğum Tarihi',
+          filled: true,
+          fillColor: GecedenColors.textFieldBackgroundColor,
+          prefixIcon: Icon(Icons.calendar_today, color: GecedenColors.iconColor),
+          contentPadding: const EdgeInsets.only(left: 10, right: 10 ,top: 15,bottom: 15),
+          enabledBorder: GecedenOutlineInputBorder.enabledBorder,
+          focusedBorder: GecedenOutlineInputBorder.focusedBorder,
+          errorBorder: GecedenOutlineInputBorder.errorBorder,
+          focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,
+        ),
+        onTap: _selectDate,
+      ),
+    );
+  }
+}
+
+class DropDownMenu extends StatefulWidget {
+
+  final TextEditingController controller;
+
+  const DropDownMenu({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  State <DropDownMenu> createState() => _DropDownMenuState();
+}
+
+class _DropDownMenuState extends State <DropDownMenu> {
+
+  String? dropdownValue;
+
+  String? validateGender(String? value)
+  {
+    if (value == null || value.isEmpty) {
+      return '* Bu alan boş bırakılamaz';
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      child: DropdownButtonFormField(
+        validator: validateGender,
+        dropdownColor: Color(0xff281c2c),
+        value: dropdownValue,
+        onChanged: (newValue) {
+          setState(() {
+            dropdownValue = newValue;
+            widget.controller.text = dropdownValue.toString();
+          });
+        },
+        items: const[
+          DropdownMenuItem(value: 'Erkek', child: Text('Erkek')),
+          DropdownMenuItem(value: 'Kadın', child: Text('Kadın')),
+          DropdownMenuItem(value: 'Belirsiz', child: Text('Belirtmek\nİstemiyorum')),
+        ],
+        decoration: InputDecoration(
+          labelText: 'Cinsiyet',
+          filled: true,
+          fillColor: GecedenColors.textFieldBackgroundColor,
+          contentPadding: const EdgeInsets.only(left: 10, right: 10 ,top: 15,bottom: 15),
+          enabledBorder: GecedenOutlineInputBorder.enabledBorder,
+          focusedBorder: GecedenOutlineInputBorder.focusedBorder,
+          errorBorder: GecedenOutlineInputBorder.errorBorder,
+          focusedErrorBorder: GecedenOutlineInputBorder.errorBorder,
         ),
       ),
     );
