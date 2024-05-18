@@ -1,18 +1,23 @@
+import 'package:app_geceden/assets/colors.dart';
+import 'package:app_geceden/assets/outline_input_border.dart';
 import 'package:flutter/material.dart';
-import 'package:geceden_app/views/style/app_colors.dart';
-import 'package:geceden_app/views/style/app_outline_input_border.dart.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
+
+// ignore: must_be_immutable
 class PhoneField extends StatefulWidget {
 
   final TextEditingController controller;
+  final ValueChanged<PhoneNumber> onChanged;
 
   const PhoneField({
     super.key,
     required this.controller,
+    required this.onChanged,
   });
 
+  
   @override
   State <PhoneField> createState() => _PhoneFieldState();
 }
@@ -40,24 +45,27 @@ class _PhoneFieldState extends State <PhoneField> {
       width: 310,
       child: IntlPhoneField(
         invalidNumberMessage: '* Lütfen geçerli bir numara giriniz',
-        autovalidateMode: AutovalidateMode.onUserInteraction,
         initialCountryCode: 'TR',
         onCountryChanged: (value){
-          country = value.toString();
+          country = value.dialCode;
         },
+        onChanged: (value) {
+          widget.controller.text = value.completeNumber;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: validatePhone,
-        controller: widget.controller,
+        //controller: widget.controller,
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           counterText: '',
           labelText: '',
           filled: true,
-          fillColor: AppColors.inputBackgroundColor,
+          fillColor: AppColors.inputFieldBackgroundColor,
           contentPadding: const EdgeInsets.only(left: 10, right: 10 ,top: 15,bottom: 15),
           enabledBorder: AppOutlineInputBorder.enabledBorder,
           focusedBorder: AppOutlineInputBorder.focusedBorder,
           errorBorder: AppOutlineInputBorder.errorBorder,
-          focusedErrorBorder: AppOutlineInputBorder.errorBorder,    
+          focusedErrorBorder: AppOutlineInputBorder.errorBorder,           
         ),
       ),
     );

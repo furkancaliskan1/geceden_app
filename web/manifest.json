@@ -1,6 +1,6 @@
 {
-    "name": "geceden_app",
-    "short_name": "geceden_app",
+    "name": "app_geceden",
+    "short_name": "app_geceden",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

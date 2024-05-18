@@ -1,4 +1,4 @@
-package com.example.geceden_app
+package com.example.app_geceden
 
 import io.flutter.embedding.android.FlutterActivity
 

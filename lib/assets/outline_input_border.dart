@@ -1,11 +1,10 @@
+import 'package:app_geceden/assets/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:geceden_app/views/style/app_colors.dart';
 
 class AppOutlineInputBorder {
-
   static OutlineInputBorder errorBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(15),
-    borderSide: const BorderSide(color: Colors.red),
+    borderSide:const BorderSide(color: Colors.red),
   );
 
   static OutlineInputBorder enabledBorder = OutlineInputBorder(
@@ -17,5 +16,4 @@ class AppOutlineInputBorder {
     borderSide: const BorderSide(color : Colors.white),
     borderRadius: BorderRadius.circular(15),
   );
-
 }
