@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378861466125",
+    "project_id": "gecedenauth",
+    "storage_bucket": "gecedenauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378861466125:android:8b52352633539378d81b44",
+        "android_client_info": {
+          "package_name": "com.example.geceden_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkurIFji7zotKt1vwFlR-dUbLwumefei4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
