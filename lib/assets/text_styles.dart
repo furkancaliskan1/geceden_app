@@ -16,5 +16,13 @@ class AppTextStyles {
     fontSize: 16,
     color: Colors.white,
     fontWeight: FontWeight.w600,
-  ); 
+  );
+
+  static TextStyle appBarIconTextStyle = const TextStyle(
+    fontFamily: 'Staatliches',
+    fontSize: 24,
+    color: Colors.white,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 3,
+  );
 }

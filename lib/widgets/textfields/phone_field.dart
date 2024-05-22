@@ -1,5 +1,6 @@
 import 'package:app_geceden/assets/colors.dart';
 import 'package:app_geceden/assets/outline_input_border.dart';
+import 'package:app_geceden/utils/validate.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
@@ -26,19 +27,6 @@ class _PhoneFieldState extends State <PhoneField> {
 
   String country = 'TR';
 
-  String? validatePhone(PhoneNumber? value){
-
-    final regex = RegExp(r'^[+][(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]$');
-
-    if (value == null || value.number.isEmpty) {
-      return '* Bu alan boş bırakılamaz';
-    }
-    if (!regex.hasMatch(value.number)) {
-      return '* Lütfen geçerli bir numara giriniz';
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -53,8 +41,7 @@ class _PhoneFieldState extends State <PhoneField> {
           widget.controller.text = value.completeNumber;
         },
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: validatePhone,
-        //controller: widget.controller,
+        validator: Validate.phone,
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           counterText: '',

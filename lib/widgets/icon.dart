@@ -19,3 +19,15 @@ class AppIcon extends StatelessWidget {
     );
   }
 }
+
+class AppIconUnbordered extends StatelessWidget {
+  const AppIconUnbordered({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'GECEDEN',
+      style: AppTextStyles.appBarIconTextStyle,
+    );
+  }
+}
