@@ -1,6 +1,6 @@
 # app_geceden
 
-A new Flutter project.
+A new Flutter project that we made.
 
 ## Getting Started
 
