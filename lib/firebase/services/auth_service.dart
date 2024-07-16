@@ -1,11 +1,11 @@
-import 'package:app_geceden/firebase/services/firestore_service.dart';
+import 'package:app_geceden/firebase/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   static String verifyId = "";
-  static final FirestoreService _firestoreService = FirestoreService();
+  static final UserService _userService = UserService();
 
   static Future sendOTP({
     required String phoneController,
@@ -34,7 +34,7 @@ class AuthService {
   
   static Future loginWithOtp({required String otp, required String phoneController}) async {
     final credential = PhoneAuthProvider.credential(verificationId: verifyId, smsCode: otp);
-    bool isPhoneNumberExists = await _firestoreService.isPhoneNumberExists(phoneController);
+    bool isPhoneNumberExists = await _userService.isPhoneNumberExists(phoneController);
 
     try {
       final user = await _firebaseAuth.signInWithCredential(credential);

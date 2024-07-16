@@ -4,7 +4,7 @@ import 'package:app_geceden/assets/box_decorations.dart';
 import 'package:app_geceden/assets/colors.dart';
 import 'package:app_geceden/assets/text_styles.dart';
 import 'package:app_geceden/firebase/services/auth_service.dart';
-import 'package:app_geceden/screens/home_page.dart';
+import 'package:app_geceden/screens/home_page/home_page.dart';
 import 'package:app_geceden/screens/register_page/register_page.dart';
 import 'package:app_geceden/widgets/button.dart';
 import 'package:app_geceden/widgets/icon.dart';

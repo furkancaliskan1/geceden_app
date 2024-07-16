@@ -1,5 +1,4 @@
-import 'package:app_geceden/screens/home_page.dart';
-import 'package:app_geceden/screens/login_page/login_page.dart';
+import 'package:app_geceden/screens/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: const ColorScheme.dark(),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const HomePage(),
     );
   }
 }

@@ -3,8 +3,8 @@
 import 'package:app_geceden/assets/box_decorations.dart';
 import 'package:app_geceden/assets/colors.dart';
 import 'package:app_geceden/assets/text_styles.dart';
-import 'package:app_geceden/firebase/services/firestore_service.dart';
-import 'package:app_geceden/screens/home_page.dart';
+import 'package:app_geceden/firebase/services/user_service.dart';
+import 'package:app_geceden/screens/home_page/home_page.dart';
 import 'package:app_geceden/screens/register_page/register_form.dart';
 import 'package:app_geceden/widgets/button.dart';
 import 'package:app_geceden/widgets/icon.dart';
@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final FirestoreService _firestoreService = FirestoreService();
+  final UserService _userService = UserService();
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
@@ -36,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
       if (user != null) { // giriş yapabilmiş ise    
         try {
-          _firestoreService.addUser(
+          _userService.addUser(
             user,
             _nameController.text, 
             _surnameController.text, 

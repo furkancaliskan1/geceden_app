@@ -2,14 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FirestoreService {
-
-  // login page'de telefon numarasına otp kodu gönderilir ve verify edilir.
-  // eğer verify işlemi başarılı bir şekilde gerçekleştiyse bu numara database'e eklenir. Daha sonra register page'e yönlendirilir.
-  // 
-
-
-  // get collection of users
+class UserService {
 
   final CollectionReference users = 
     FirebaseFirestore.instance.collection('users');

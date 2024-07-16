@@ -21,6 +21,7 @@ class AppTextStyles {
   static TextStyle appBarIconTextStyle = const TextStyle(
     fontFamily: 'Staatliches',
     fontSize: 24,
+    height: 2.0,
     color: Colors.white,
     fontWeight: FontWeight.w600,
     letterSpacing: 3,
